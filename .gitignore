@@ -50,3 +50,13 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+bin/
+
+\.vscode/ipch/38c28c6eef44531f/
+
+*.ipch
+
+*.bin
+
+*.glade~
