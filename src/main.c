@@ -21,7 +21,9 @@ Proyecto 3: Real time Scheduling */
 
 GtkBuilder *builder;
 
-// Hide a thread info section
+/**
+ * Set visibility for a task row
+ */
 void show_task(GtkBuilder *builder, int index, int visible){
   GObject *id;
   GObject *te;
@@ -98,6 +100,5 @@ int initGtkUI(int argc, char **argv)
  */
 int main(int argc, char **argv)
 {   
-    //schedulerTesterWorkingExample(); //para que sirva, hay que comentar la creación de threads en initTaskList()
     initGtkUI(argc, argv);
 }
