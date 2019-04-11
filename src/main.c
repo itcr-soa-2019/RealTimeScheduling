@@ -20,6 +20,37 @@ Proyecto 3: Real time Scheduling */
 #include "stdio.h"
 
 GtkBuilder *builder;
+GtkWidget *window;
+
+int tasks;
+
+static void
+on_response (GtkDialog *dialog,
+             gint       response_id,
+             gpointer   user_data)
+{
+  /* Destroy the dialog after one of the above actions have taken place */
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+
+}
+
+/**
+ * Show a dialog when the execution time is greater than
+ * the period time
+ */
+void showErrorDialog(int task) {
+    GtkWidget *dialog;
+    GtkDialogFlags flags = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT;
+    char* error = (char*) malloc(sizeof(char)*80);
+    sprintf(error,"El periodo de la Tarea %d tiene que ser mayor o igual que el tiempo de ejecución", task);
+    dialog = gtk_message_dialog_new (GTK_WINDOW(window), GTK_DIALOG_MODAL, 
+                                            GTK_MESSAGE_WARNING, 
+                                            GTK_BUTTONS_OK, 
+                                            error);
+    gtk_widget_show(dialog);
+    g_signal_connect (GTK_DIALOG (dialog), "response", 
+                    G_CALLBACK (on_response), NULL);
+}
 
 /**
  * Set visibility for a task row
@@ -42,6 +73,26 @@ void show_task(GtkBuilder *builder, int index, int visible){
   gtk_widget_set_visible(GTK_WIDGET(pe), visible); //Make it visible
 }
 
+/**
+ * Validates the input data before start processing
+ */
+int validateData(GtkBuilder *builder, int index) {
+  GObject *te;
+  GObject *pe;
+  char* executionTime = (char*) malloc(sizeof(char)*6);
+  sprintf(executionTime, "te_%d", index);
+  char* period = (char*) malloc(sizeof(char)*6);
+  sprintf(period, "pe_%d", index);
+  te = gtk_builder_get_object(builder, executionTime);
+  pe = gtk_builder_get_object(builder, period);
+  int time = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(te));
+  int ptime = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(pe));
+  printf("%d",time);
+  printf("%d",ptime);
+  if(time > ptime) {
+      showErrorDialog(index);
+  }
+}
 
 /**
  * Show required tasks table lines
@@ -49,7 +100,7 @@ void show_task(GtkBuilder *builder, int index, int visible){
 void add_tasks() {
     GObject *spinBtn;
     spinBtn = gtk_builder_get_object (builder, "num_tasks");
-    int tasks = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinBtn));
+    tasks = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spinBtn));
     if(tasks > 10) {
         tasks = 10;
     }
@@ -64,11 +115,18 @@ void add_tasks() {
     }
 }
 
-
+/**
+ * start
+ */
+void start_proc(){
+    for(size_t i = 0; i < tasks; i++)
+    {
+        validateData(builder, i+1);
+    }
+}
 
 int initGtkUI(int argc, char **argv)
 { 
-    GtkWidget *window;
     GObject *button;
     GObject *spinButton;
     GError *error = NULL;
@@ -83,7 +141,6 @@ int initGtkUI(int argc, char **argv)
         g_clear_error (&error);
         return 1;
     }
-    printf("Done");
     /* Connect signal handlers to the constructed widgets. */
     window = GTK_WIDGET(gtk_builder_get_object(builder, "main_window"));
     g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
@@ -91,6 +148,8 @@ int initGtkUI(int argc, char **argv)
     g_signal_connect (button, "clicked", G_CALLBACK (gtk_main_quit), NULL);
     button = gtk_builder_get_object (builder, "add_tasks");
     g_signal_connect (button, "clicked", G_CALLBACK (add_tasks), NULL);
+    button = gtk_builder_get_object (builder, "proc_btn");
+    g_signal_connect (button, "clicked", G_CALLBACK (start_proc), NULL);
     gtk_widget_show(window);
     gtk_main();
 }
