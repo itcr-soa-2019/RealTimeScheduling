@@ -221,7 +221,7 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkCheckButton" id="RM_CHK">
-                        <property name="label" translatable="yes">RM: Rate Monothonic</property>
+                        <property name="label" translatable="yes">RM: Rate Monotonic</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -259,8 +259,8 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="RM_SLD">
-                        <property name="label" translatable="yes">Slide Independiente</property>
+                      <object class="GtkCheckButton" id="IND_CHK">
+                        <property name="label" translatable="yes">Slides Independientes</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -272,30 +272,10 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="EDF_SLD">
-                        <property name="label" translatable="yes">Slide Independiente</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="draw_indicator">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">1</property>
-                      </packing>
+                      <placeholder/>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="LLF_SLD">
-                        <property name="label" translatable="yes">Slide Independiente</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="draw_indicator">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">2</property>
-                      </packing>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>

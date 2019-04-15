@@ -18,6 +18,7 @@ Proyecto 3: Real time Scheduling */
 
 #include <gtk/gtk.h>
 #include "stdio.h"
+#include "scheduling/scheduling.h"
 
 GtkBuilder *builder;
 GtkWidget *window;
@@ -46,7 +47,7 @@ void showErrorDialog(int task) {
     dialog = gtk_message_dialog_new (GTK_WINDOW(window), GTK_DIALOG_MODAL, 
                                             GTK_MESSAGE_WARNING, 
                                             GTK_BUTTONS_OK, 
-                                            error);
+                                            "%s",error);
     gtk_widget_show(dialog);
     g_signal_connect (GTK_DIALOG (dialog), "response", 
                     G_CALLBACK (on_response), NULL);
@@ -76,7 +77,7 @@ void show_task(GtkBuilder *builder, int index, int visible){
 /**
  * Validates the input data before start processing
  */
-int validateData(GtkBuilder *builder, int index) {
+int validateData(GtkBuilder *builder, int index, task_t *task) {
   GObject *te;
   GObject *pe;
   char* executionTime = (char*) malloc(sizeof(char)*6);
@@ -87,11 +88,13 @@ int validateData(GtkBuilder *builder, int index) {
   pe = gtk_builder_get_object(builder, period);
   int time = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(te));
   int ptime = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(pe));
-  printf("%d",time);
-  printf("%d",ptime);
   if(time > ptime) {
       showErrorDialog(index);
+      return 1;
   }
+  task->executionTime = time;
+  task->periodTime = ptime;
+  return 0;
 }
 
 /**
@@ -119,9 +122,45 @@ void add_tasks() {
  * start
  */
 void start_proc(){
+    int error = 0;
+    GObject *RM_Chk;
+    GObject *EDF_Chk;
+    GObject *LLF_Chk;
+    GObject *Slides_Chk;
+    RM_Chk = gtk_builder_get_object (builder, "RM_CHK");
+    EDF_Chk = gtk_builder_get_object (builder, "EDF_CHK");
+    LLF_Chk = gtk_builder_get_object (builder, "LLF_CHK");
+    Slides_Chk = gtk_builder_get_object (builder, "IND_CHK");
+    CurrentExecution.Slides = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(Slides_Chk));
+    task_t taskData[tasks];
     for(size_t i = 0; i < tasks; i++)
     {
-        validateData(builder, i+1);
+        error += validateData(builder, i+1, &taskData[i]);
+    }
+    if(error > 0){
+        return; // Some tasks data are incorrect.
+    }
+    CurrentExecution.RM = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(RM_Chk));
+    CurrentExecution.EDF = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(EDF_Chk));
+    CurrentExecution.LLF = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(LLF_Chk));
+    CurrentExecution.tasks = taskData;
+    if((CurrentExecution.RM + CurrentExecution.EDF + CurrentExecution.LLF) > 0){
+        CurrentExecution.count = tasks;
+        execute_Scheduling(CurrentExecution);
+        return;
+    }
+    else{
+    GtkWidget *dialog;
+    GtkDialogFlags flags = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT;
+    char* error = (char*) malloc(sizeof(char)*80);
+    sprintf(error,"Debe escoger al menos un algoritmo para la simulación");
+    dialog = gtk_message_dialog_new (GTK_WINDOW(window), GTK_DIALOG_MODAL, 
+                                            GTK_MESSAGE_WARNING, 
+                                            GTK_BUTTONS_OK, 
+                                            "%s", error);
+    gtk_widget_show(dialog);
+    g_signal_connect (GTK_DIALOG (dialog), "response", 
+                    G_CALLBACK (on_response), NULL);
     }
 }
 
