@@ -66,7 +66,7 @@ int RateMonotonic(execution_data *execution) {
         remainingExecutions[orderedIndexes[i]] = currentTask.executionTime;
       }
     }
-    for (int i = 0; i < execution->count; i++) { // Se llena un campo de la matriz
+    for (int i = 0; i < execution->count; i++) { 
       if (clock == execution->timeUnits) {
         break;
       }
