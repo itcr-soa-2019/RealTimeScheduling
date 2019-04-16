@@ -89,6 +89,61 @@ int RateMonotonic(execution_data *execution) {
 }
 
 /**
+ * Earliest Deadline First Simulation
+ */
+int EarliestDeadlineFirst(execution_data *execution){
+  int orderedIndexes[execution->count];
+  int remainingExecutions[execution->count];
+  int deadlines[execution->count];
+  int readyQueue[execution->count];
+  for (int i = 0; i < execution->count; i++) {
+    deadlines[i] = 0;
+    readyQueue[i] = 0;
+  }
+  int ed = execution->timeUnits;
+  int next = 0;
+  int failureTime = 0;
+  int clock = 0;
+  while(clock <= execution->timeUnits){
+    for (int i = 0; i < execution->count; i++) {
+      task_t currentTask = execution->tasks[i];
+      if (missedDeadline(clock, currentTask.periodTime,
+                         remainingExecutions[i])) {
+        failureTime = clock;
+      }
+      if(clock % currentTask.periodTime == 0){
+        readyQueue[i] = 1;
+        remainingExecutions[i] = currentTask.executionTime;
+        deadlines[i] += currentTask.periodTime;
+        if((deadlines[i] <= ed) && readyQueue[i] == 1){
+            ed = deadlines[i];
+            next = i;
+        }
+      }
+    }
+    if(clock != execution->timeUnits){      
+        (execution->EDF_Table[next*execution->timeUnits + clock]) = readyQueue[next];
+    }
+    remainingExecutions[next]--;
+    if(remainingExecutions[next] == 0){
+        readyQueue[next] = 0;
+        ed = execution->timeUnits;
+        for(int i = 0; i < execution->count; i++){    
+          if((deadlines[i] <= ed) && readyQueue[i] == 1){
+            ed = deadlines[i];
+            next = i;
+          }
+        }    
+    }
+    if(failureTime == clock && clock != 0){
+        clock = execution->timeUnits;
+    }
+    clock++;
+  }
+  return failureTime;
+}
+
+/**
  * Execute the expected algorithms
  */
 void execute_Scheduling(execution_data execution) {
@@ -106,5 +161,10 @@ void execute_Scheduling(execution_data execution) {
   execution.RM_Table = rm_table;
   int f = RateMonotonic(&execution);
   printf("Failure at: %d", f);
+  int edf_table[execution.count][timeUnits];
+  memset(edf_table, 0, sizeof edf_table );
+  execution.EDF_Table = edf_table;
+  int e = EarliestDeadlineFirst(&execution);
+  printf("Failure at: %d", e);
 
 }
