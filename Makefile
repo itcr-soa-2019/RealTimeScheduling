@@ -13,6 +13,9 @@ build:
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $(SOURCES) 
 	mv *.o src/ 
 	cp src/ui/guiGTK.glade $(TARGET)
+	mkdir $(TARGET)/beamerFiles
+	mkdir $(TARGET)/output
+	cp -a src/beamerFiles/. $(TARGET)/beamerFiles
 
 $(EXECUTABLE): $(TARGET) build
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(SOURCES) -o $(TARGET)/$(EXECUTABLE) -lm $(LDLIBS)
@@ -22,4 +25,4 @@ $(TARGET):
 
 clean:
 	rm -f $(OBJECTS)  
-	rm -rf target/
+	rm -rf $(TARGET)

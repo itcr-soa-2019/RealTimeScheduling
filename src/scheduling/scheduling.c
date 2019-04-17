@@ -1,5 +1,5 @@
 #include "scheduling.h"
-
+#include "../presentation/createTex.h"
 /**
  * Returns the greatest common divisor
  * to calculate the hyperperiod
@@ -92,7 +92,6 @@ int RateMonotonic(execution_data *execution) {
  * Earliest Deadline First Simulation
  */
 int EarliestDeadlineFirst(execution_data *execution){
-  int orderedIndexes[execution->count];
   int remainingExecutions[execution->count];
   int deadlines[execution->count];
   int readyQueue[execution->count];
@@ -143,6 +142,60 @@ int EarliestDeadlineFirst(execution_data *execution){
   return failureTime;
 }
 
+
+/**
+ * Least Laxity First Simulation
+ */
+int LeastLaxityFirst(execution_data *execution){
+  int remainingExecutions[execution->count];
+  int deadlines[execution->count];
+  int readyQueue[execution->count];
+  int taskLaxity[execution->count];
+  for (int i = 0; i < execution->count; i++) {
+    deadlines[i] = 0;
+    readyQueue[i] = 0;
+    taskLaxity[i] = 0;
+  }
+  int laxity = execution->timeUnits;
+  int nextTask = 0;
+  int failureTime = 0;
+  int clock = 0;
+  while(clock <= execution->timeUnits){
+    for (int i = 0; i < execution->count; i++) {
+      task_t currentTask = execution->tasks[i];
+      if (missedDeadline(clock, currentTask.periodTime,
+                         remainingExecutions[i])) {
+        failureTime = clock;
+      }
+      if(clock % currentTask.periodTime == 0){
+        readyQueue[i] = 1;
+        remainingExecutions[i] = currentTask.executionTime;
+        deadlines[i] += currentTask.periodTime;
+      }
+      taskLaxity[i] = deadlines[i]-remainingExecutions[i]-clock;
+      if((taskLaxity[i] <= laxity) && 
+          readyQueue[i] == 1){
+              laxity = taskLaxity[i];
+              nextTask = i;
+        }
+    }
+    if(clock != execution->timeUnits){      
+        (execution->LLF_Table[nextTask*execution->timeUnits + clock]) = readyQueue[nextTask];
+    }
+    remainingExecutions[nextTask]--;
+    if(remainingExecutions[nextTask] == 0){
+        readyQueue[nextTask] = 0;
+    }
+    laxity = execution->timeUnits;
+    if(failureTime == clock && clock != 0){
+        clock = execution->timeUnits;
+    }
+    clock++;
+  }
+  return failureTime;
+}
+
+
 /**
  * Execute the expected algorithms
  */
@@ -166,5 +219,12 @@ void execute_Scheduling(execution_data execution) {
   execution.EDF_Table = edf_table;
   int e = EarliestDeadlineFirst(&execution);
   printf("Failure at: %d", e);
-
+  int llf_table[execution.count][timeUnits];
+  memset(llf_table, 0, sizeof llf_table );
+  execution.LLF_Table = llf_table;
+  int l = LeastLaxityFirst(&execution);
+  printf("Failure at: %d", l);
+  createTexFile();
+  system("pdflatex output/Presentacion.tex");
+  system("evince Presentacion.pdf & > temp.o");     
 }

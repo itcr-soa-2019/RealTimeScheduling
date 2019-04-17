@@ -1,0 +1,47 @@
+\documentclass[aspectratio=1610,10pt]{beamer}
+\usetheme{Copenhagen}
+\usecolortheme{default}
+\useoutertheme{infolines}
+%\useinnertheme[shadow]{rounded}
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Proyecto 3]{Scheduling en Tiempo Real} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author[Espinoza Gonzalez Figueroa Somarribas Leandro]{Fabiola Espinoza    Nathalia Gonzalez   Manuel Figueroa José Somarribas Esteban Leandro} % Your name
+\institute[ITCR] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+Instituto Tecnológico de Costa Rica\\ % Your institution for the title page
+Curso: Sistemas Operativos Avanzados \\
+Prof: Phd. Francisco Torres Rojas   \\
+\medskip
+\textit{} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\end{document} 
