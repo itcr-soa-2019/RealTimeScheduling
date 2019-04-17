@@ -1,0 +1,18 @@
+\begin{frame} 
+\frametitle{Earliest Deadline First} 
+
+Introducido por C. L. Liu y James W. Layland en \textit{"Scheduling algorithms for multiprogramming in a hard real-time environment"},\\
+en 1973 \\
+Sistema de prioridades dinámicas asignadas de acuerdo a la cercanía del deadline de la tarea.\\
+La tarea con el deadline más cercano tiene mayor prioridad. \\
+
+Un conjunto de $n$ tareas es schedulable por EDF si:
+\begin{center}
+$U_{p} = \sum_{i=1}^{n} \frac{C_i}{T_i} <= 1$
+\end{center}
+
+Donde: \\
+C: Computation Time \\
+T: Task period
+
+\end{frame}

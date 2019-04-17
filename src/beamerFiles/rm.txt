@@ -1,0 +1,27 @@
+\begin{frame} 
+\frametitle{Rate Monotonic} 
+
+Introducido por C. L. Liu y James W. Layland en \textit{"Scheduling algorithms for multiprogramming in a hard real-time environment"},\\
+en 1973 \\
+Sistema de prioridades estáticas asignadas deacuerdo al período de la tarea.\\
+La tarea con el menor período tiene mayor prioridad. \\
+El algoritmo supone:
+\begin{itemize}
+\item \textbf{(A1)} Las peticiones de todas las tareas con hard deadlines son periodicas y con intervalos constantes entre peticiones.
+\item \textbf{(A2)} Todas las tareas deben de terminar antes de que ocurra la siguiente peticion.
+\item \textbf{(A3)} Las tareas son independientes.
+\item \textbf{(A4)} El tiempo de computacion de una tarea es constante y no cambia.
+\item \textbf{(A5)} Las tareas que no son periodicas son especiales, desplazan a las tareas periodicas cuando se ejecutan.
+\end{itemize} 
+
+Un conjunto de $n$ tareas es schedulable por RM si se cumple LL-Test:
+\begin{center}
+$\sum_{i=1}^{n} U_{i} \leq  n(2^{\frac{1}{n}}-1) < 0.7$
+\end{center}
+
+Donde: $U_{i} = \frac{C_{i}}{T_{i}}$  \\
+C: Computation Time \\
+T: Task period
+
+
+\end{frame}

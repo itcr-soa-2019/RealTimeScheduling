@@ -1,0 +1,20 @@
+\begin{frame} 
+\frametitle{Least Laxity First} 
+
+LLF es un algoritmo que asigna las prioridades según el Laxity de cada tarea de manera dinámica.\\
+El Laxity de una tarea es la urgencia de una tarea para ser ejecutada y se define matemáticamente como:\\
+\begin{center}
+$L_{i} = (D_{i} - T) C_{i}$ \\
+Donde $D_{i}$ es el deadline, T es el tiempo actual y $C_{i}$ es el tiempo de ejecución restante.
+\end{center}
+Una tarea con un Laxity menor tiene mayor prioridad.\\
+Un conjunto de $n$ tareas es schedulable por LLF si:
+\begin{center}
+$U_{p} = \sum_{i=1}^{n} \frac{C_i}{T_i} <= 1$
+\end{center}
+
+Donde: \\
+C: Computation Time \\
+T: Task period
+
+\end{frame}

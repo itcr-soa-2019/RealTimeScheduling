@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "../tasks.h"
+#include "../presentation/createTex.h"
+
 /**
  * Executes scheduling on the current settings
  */

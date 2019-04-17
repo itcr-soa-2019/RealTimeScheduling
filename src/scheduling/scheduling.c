@@ -1,5 +1,6 @@
 #include "scheduling.h"
-#include "../presentation/createTex.h"
+
+
 /**
  * Returns the greatest common divisor
  * to calculate the hyperperiod
@@ -209,6 +210,8 @@ void execute_Scheduling(execution_data execution) {
     timeUnits = lcm(timeUnits, execution.tasks[i].periodTime);
   }
   execution.timeUnits = timeUnits;
+  execution.Up = Up;
+  execution.Un = (double)execution.count*(pow((double)2,(double)1/(double)execution.count)-1);
   int rm_table[execution.count][timeUnits];
   memset(rm_table, 0, sizeof rm_table );
   execution.RM_Table = rm_table;
@@ -224,7 +227,7 @@ void execute_Scheduling(execution_data execution) {
   execution.LLF_Table = llf_table;
   int l = LeastLaxityFirst(&execution);
   printf("Failure at: %d", l);
-  createTexFile();
+  createTexFile(&execution);
   system("pdflatex output/Presentacion.tex");
   system("evince Presentacion.pdf & > temp.o");     
 }

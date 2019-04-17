@@ -1,0 +1,83 @@
+#include "createTex.h"
+/**
+ * Puts the content of a file inside the output file
+ */
+void combineFiles(FILE *input, FILE *output) {
+    char c;
+    while ((c = fgetc(input)) != EOF){
+        fputc(c, output);
+    }
+}
+
+
+/**
+ * Includes the description slide for the 
+ * RM algorithm
+ */
+void includeRMDesc(FILE *output){
+    FILE *rm = fopen("beamerFiles/rm.txt", "r");
+    combineFiles(rm,output);
+    fclose(rm);
+}
+
+/**
+ * Includes the description slide for the EDF 
+ * algorithm
+ */
+void includeEDFDesc(FILE *output){
+    FILE *edf = fopen("beamerFiles/edf.txt", "r");
+    combineFiles(edf,output);
+    fclose(edf);
+}
+
+/**
+ * Includes the  description slide for the LLF
+ * algorithm
+ */
+void includeLLFDesc(FILE *output){
+    FILE *llf = fopen("beamerFiles/llf.txt", "r");
+    combineFiles(llf,output);
+    fclose(llf);
+}
+
+/**
+ * Includes the  schedulability Test Results
+ */
+void includeSchedTest(FILE *output){
+    FILE *schedSlide = fopen("beamerFiles/SchedTest", "r");
+    combineFiles(schedSlide, output);
+    fclose(schedSlide);
+}
+
+/**
+ * Creates a tex file to generate
+ * the final presentation
+ */
+void createTexFile(execution_data *execution) {
+
+    // char filename[255];
+    // time_t rawtime;
+    // time (&rawtime);
+    // strftime(filename, sizeof(filename), "output/Presentation_%s", ctime(&rawtime));
+    // printf("%s",filename);
+
+    FILE *intro = fopen("beamerFiles/intro.txt", "r");
+    FILE *close = fopen("beamerFiles/close.txt", "r");
+    FILE *beamer = fopen("output/Presentacion.tex", "w");
+    combineFiles(intro, beamer);
+    // Algorithms Slides
+    includeRMDesc(beamer);
+    includeEDFDesc(beamer);
+    includeLLFDesc(beamer);
+    /*Include Tests file */
+    createTestResults(execution);
+    includeSchedTest(beamer);
+    combineFiles(close, beamer);
+    fclose(close);
+    fclose(intro);
+    fclose(beamer); 
+}
+
+
+
+

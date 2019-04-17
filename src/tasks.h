@@ -13,6 +13,7 @@ typedef struct execution_data
     int Slides;
     int count;
     double Up;
+    double Un;
     int timeUnits;
     int *RM_Table;
     int *EDF_Table;
