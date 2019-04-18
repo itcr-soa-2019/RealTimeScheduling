@@ -1,13 +1,5 @@
 #include "createTex.h"
-/**
- * Puts the content of a file inside the output file
- */
-void combineFiles(FILE *input, FILE *output) {
-    char c;
-    while ((c = fgetc(input)) != EOF){
-        fputc(c, output);
-    }
-}
+
 
 
 /**
@@ -66,9 +58,15 @@ void createTexFile(execution_data *execution) {
     FILE *beamer = fopen("output/Presentacion.tex", "w");
     combineFiles(intro, beamer);
     // Algorithms Slides
-    includeRMDesc(beamer);
-    includeEDFDesc(beamer);
-    includeLLFDesc(beamer);
+    if(execution->RM > 0) {
+        includeRMDesc(beamer);
+    }
+    if(execution->EDF > 0) {
+         includeEDFDesc(beamer);
+    }
+    if(execution->LLF > 0) {
+        includeLLFDesc(beamer);
+    }
     /*Include Tests file */
     createTestResults(execution);
     includeSchedTest(beamer);

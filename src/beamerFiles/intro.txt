@@ -1,5 +1,7 @@
-\documentclass[aspectratio=1610,10pt]{beamer}
+\documentclass[aspectratio=1610,10pt, xcolor=table]{beamer}
 \usepackage[spanish]{babel}
+\usepackage{xtab}
+\usepackage{xcolor}
 \usetheme{Copenhagen}
 \usecolortheme{default}
 \useoutertheme{infolines}

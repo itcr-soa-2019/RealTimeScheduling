@@ -5,12 +5,6 @@
 #include "schedulability.h"
 
 /**
- * Puts the content of a file inside the output file
- */
-void combineFiles(FILE *input, FILE *output);
-
-
-/**
  * Includes the description slide for the 
  * RM algorithm
  */
