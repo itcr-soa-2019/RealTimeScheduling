@@ -8,8 +8,11 @@ typedef struct task_t
 typedef struct execution_data
 {
     int RM;
+    int RM_Fail;
     int EDF;
+    int EDF_Fail;
     int LLF;
+    int LLF_Fail;
     int Slides;
     int count;
     double Up;

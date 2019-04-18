@@ -46,13 +46,6 @@ void includeSchedTest(FILE *output){
  * the final presentation
  */
 void createTexFile(execution_data *execution) {
-
-    // char filename[255];
-    // time_t rawtime;
-    // time (&rawtime);
-    // strftime(filename, sizeof(filename), "output/Presentation_%s", ctime(&rawtime));
-    // printf("%s",filename);
-
     FILE *intro = fopen("beamerFiles/intro.txt", "r");
     FILE *close = fopen("beamerFiles/close.txt", "r");
     FILE *beamer = fopen("output/Presentacion.tex", "w");

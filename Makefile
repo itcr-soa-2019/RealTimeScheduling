@@ -26,3 +26,6 @@ $(TARGET):
 clean:
 	rm -f $(OBJECTS)  
 	rm -rf $(TARGET)
+install:
+	apt-get install texlive-full
+	apt-get install libgtk-3-dev 
