@@ -61,6 +61,7 @@ int RateMonotonic(execution_data *execution) {
       if (missedDeadline(clock, currentTask.periodTime,
                          remainingExecutions[orderedIndexes[i]])) {
         failureTime = clock;
+        execution->RM_Fail_Task = orderedIndexes[i];
       }
       if (clock % currentTask.periodTime == 0) {
         readyQueue[orderedIndexes[i]] = 1;
@@ -110,6 +111,7 @@ int EarliestDeadlineFirst(execution_data *execution){
       if (missedDeadline(clock, currentTask.periodTime,
                          remainingExecutions[i])) {
         failureTime = clock;
+        execution->EDF_Fail_Task = i;
       }
       if(clock % currentTask.periodTime == 0){
         readyQueue[i] = 1;
@@ -167,6 +169,7 @@ int LeastLaxityFirst(execution_data *execution){
       if (missedDeadline(clock, currentTask.periodTime,
                          remainingExecutions[i])) {
         failureTime = clock;
+        execution->LLF_Fail_Task = i;
       }
       if(clock % currentTask.periodTime == 0){
         readyQueue[i] = 1;

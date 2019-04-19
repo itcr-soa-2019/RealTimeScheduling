@@ -9,10 +9,13 @@ typedef struct execution_data
 {
     int RM;
     int RM_Fail;
+    int RM_Fail_Task;
     int EDF;
     int EDF_Fail;
+    int EDF_Fail_Task;
     int LLF;
     int LLF_Fail;
+    int LLF_Fail_Task;
     int Slides;
     int count;
     double Up;
