@@ -109,7 +109,7 @@ void createLLFResultSlide(FILE *output, execution_data *execution) {
     combineFiles(table,schedSlide);
     fclose(table);
     if(execution->LLF_Fail > 0) {
-        fprintf(schedSlide,"%s %d %s", "El algoritmo reporta un fallo en la iteración: ",execution->LLF_Fail+1,"\\\\ \n");    
+        fprintf(schedSlide,"%s %d %s", "El algoritmo reporta un fallo en la iteración: ",execution->LLF_Fail,"\\\\ \n");    
         fprintf(schedSlide,"%s %d %s", "La tarea: T",execution->LLF_Fail_Task+1," falló su deadline. \\\\ \n");    
     }
     else{
@@ -133,7 +133,7 @@ void createRMResultSlide(FILE *output, execution_data *execution) {
     combineFiles(table,schedSlide);
     fclose(table);
     if(execution->RM_Fail > 0) {
-        fprintf(schedSlide,"%s %d %s", "El algoritmo reporta un fallo en la iteración: ",execution->RM_Fail+1," \\\\ \n");    
+        fprintf(schedSlide,"%s %d %s", "El algoritmo reporta un fallo en la iteración: ",execution->RM_Fail," \\\\ \n");    
         fprintf(schedSlide,"%s %d %s", "La tarea: T",execution->RM_Fail_Task+1," falló su deadline. \\\\ \n");    
     }
     else{
@@ -157,7 +157,7 @@ void createEDFResultSlide(FILE *output, execution_data *execution) {
     combineFiles(table,schedSlide);
     fclose(table);
     if(execution->EDF_Fail > 0) {
-        fprintf(schedSlide,"%s %d %s", "El algoritmo reporta un fallo en la iteración: ",execution->EDF_Fail+1,"\\\\ \n");    
+        fprintf(schedSlide,"%s %d %s", "El algoritmo reporta un fallo en la iteración: ",execution->EDF_Fail,"\\\\ \n");    
         fprintf(schedSlide,"%s %d %s", "La tarea: T",execution->EDF_Fail_Task+1," falló su deadline. \\\\ \n");       
     }
     else{
@@ -203,26 +203,32 @@ void createCompleteResultSlide(FILE *output, execution_data *execution) {
     fprintf(schedSlide,"%s %s", "\\end{frame}","\n");
     fprintf(schedSlide,"%s %s","\\begin{frame}[allowframebreaks]","\n");
     fprintf(schedSlide,"%s %s", "\\frametitle{Resumen de Ejecución Combinado}","\n");
-    if(execution->RM_Fail > 0) {
-        fprintf(schedSlide,"%s %d %s", "El algoritmo Rate Monotonic reporta un fallo en la iteración: ",execution->RM_Fail+1," \\\\ \n");    
-        fprintf(schedSlide,"%s %d %s", "La tarea: T",execution->RM_Fail_Task+1," falló su deadline. \\\\ \n");    
+    if(execution->RM > 0){
+        if(execution->RM_Fail > 0) {
+            fprintf(schedSlide,"%s %d %s", "El algoritmo Rate Monotonic reporta un fallo en la iteración: ",execution->RM_Fail," \\\\ \n");    
+            fprintf(schedSlide,"%s %d %s", "La tarea: T",execution->RM_Fail_Task+1," falló su deadline. \\\\ \n");    
+         }
+        else{
+            fprintf(schedSlide,"%s %s", "El algoritmo Rate Monotonic terminó correctamente: "," \\\\ \n");    
+        }
     }
-    else{
-        fprintf(schedSlide,"%s %s", "El algoritmo Rate Monotonic terminó correctamente: "," \\\\ \n");    
+    if(execution->EDF > 0){
+        if(execution->EDF_Fail > 0) {
+            fprintf(schedSlide,"%s %d %s", "El algoritmo EDF reporta un fallo en la iteración: ",execution->EDF_Fail," \\\\ \n");    
+            fprintf(schedSlide,"%s %d %s", "La tarea: T",execution->EDF_Fail_Task+1," falló su deadline. \\\\ \n");            
+        }
+        else{
+            fprintf(schedSlide,"%s %s", "El algoritmo EDF terminó correctamente: ","\\\\ \n");    
+        }
     }
-    if(execution->EDF_Fail > 0) {
-        fprintf(schedSlide,"%s %d %s", "El algoritmo EDF reporta un fallo en la iteración: ",execution->EDF_Fail+1," \\\\ \n");    
-        fprintf(schedSlide,"%s %d %s", "La tarea: T",execution->EDF_Fail_Task+1," falló su deadline. \\\\ \n");            
-    }
-    else{
-        fprintf(schedSlide,"%s %s", "El algoritmo EDF terminó correctamente: ","\\\\ \n");    
-    }
-    if(execution->LLF_Fail > 0) {
-        fprintf(schedSlide,"%s %d %s", "El algoritmo LLF reporta un fallo en la iteración: ",execution->LLF_Fail+1,"\\\\ \n");    
-        fprintf(schedSlide,"%s %d %s", "La tarea: T",execution->LLF_Fail_Task+1," falló su deadline. \\\\ \n");    
-    }
-    else{
-        fprintf(schedSlide,"%s %s", "El algoritmo LLF terminó correctamente: ","\\\\ \n"); 
+    if(execution->LLF > 0){
+        if(execution->LLF_Fail > 0) {
+            fprintf(schedSlide,"%s %d %s", "El algoritmo LLF reporta un fallo en la iteración: ",execution->LLF_Fail,"\\\\ \n");    
+            fprintf(schedSlide,"%s %d %s", "La tarea: T",execution->LLF_Fail_Task+1," falló su deadline. \\\\ \n");    
+        }
+        else{
+            fprintf(schedSlide,"%s %s", "El algoritmo LLF terminó correctamente: ","\\\\ \n"); 
+        }
     }
     fprintf(schedSlide,"%s %s", "\\end{frame}","\n");
     fclose(schedSlide);
