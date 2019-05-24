@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "schedulability.h"
+
 
 /**
  * Puts the content of a file inside the output file
@@ -262,10 +264,10 @@ void createTestResults(execution_data *execution) {
 
         fprintf(schedSlide,"%s %s", "Este conjunto de tareas es schedulable por RM si: \\\\","\n");
         fprintf(schedSlide,"%s %s", "\\begin{center}","\n");
-        fprintf(schedSlide,"%s %s", "$U_{p} = \\sum_{i=1}^{n} U_{i} \\leq  U_{n} = n(2^{\\frac{1}{n}}-1) < 0.7$","\n");
+        fprintf(schedSlide,"%s %s", "$U_{p} = \\sum_{i=1}^{n} U_{i} \\leq  U_{n} = n(2^{\\frac{1}{n}}-1) < ln(2)$","\n");
         fprintf(schedSlide,"%s %s", "\\end{center}","\n");
         fprintf(schedSlide,"%s %f %s %f %s ", "Para el conjunto dado $U_{p}$ es: ",execution->Up," y $U_{n}$ es: ", execution->Un, "\\\\ \n");
-        if(execution->Un < 0.7) {
+        if(execution->Un < 0.69314718055) {
             fprintf(schedSlide,"%s %s", "Por lo tanto es un conjunto schedulable","\\\\ \n");
         }
         else {
@@ -299,7 +301,7 @@ void createTestResults(execution_data *execution) {
         fprintf(schedSlide,"%s %s", "$U_{p} = \\sum_{i=1}^{n} \\frac{C_i}{T_i} <= 1$","\n");
         fprintf(schedSlide,"%s %s", "\\end{center}","\n");
         fprintf(schedSlide,"%s %f %s", "Para el conjunto dado $U_{p}$ es:",execution->Up, "\\\\ \n");
-        if(execution->Up <= 1) {
+        if(execution->Up < 1.00 || fabs(execution->Up - 1.00) < precission) {
             fprintf(schedSlide,"%s %s", "$U_{p} \\leq 1$ por lo tanto es un conjunto schedulable","\\\\ \n");
         }
         else {
@@ -333,7 +335,7 @@ void createTestResults(execution_data *execution) {
         fprintf(schedSlide,"%s %s", "$U_{p} = \\sum_{i=1}^{n} \\frac{C_i}{T_i} <= 1$","\n");
         fprintf(schedSlide,"%s %s", "\\end{center}","\n");
         fprintf(schedSlide,"%s %f %s", "Para el conjunto dado $U_{p}$ es:",execution->Up, "\\\\ \n");
-        if(execution->Up <= 1) {
+        if(execution->Up < 1.00 || fabs(execution->Up - 1.00) < precission) {
             fprintf(schedSlide,"%s %s", "$U_{p} \\leq 1$ por lo tanto es un conjunto schedulable","\\\\ \n");
         }
         else {
