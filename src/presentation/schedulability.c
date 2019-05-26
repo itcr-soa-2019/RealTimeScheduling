@@ -357,7 +357,6 @@ void createTestResults(execution_data *execution) {
     else {
         createCompleteResultSlide(schedSlide,execution);
     }
-   
     fclose(schedSlide);
 
 }

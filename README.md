@@ -27,4 +27,9 @@ $ cd bin/
 $ ./main
 ```
 Seleccionar las opciones deseadas en la interfaz gráfica y dar click en procesar:
+* Ingresar la cantidad de tareas y dar click en ***Crear Tareas***
+* Para cada tarea indicar el tiempo de ejecución y periodo.
+* Finalmente escoger los algoritmos y si se quiere o no los resultados de forma conjunta.
+* Dar click en procesar.
+* Con suerte se generará un pdf con la presentación de los resultados para la simulación.
 ![](images/maingui.png)
