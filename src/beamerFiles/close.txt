@@ -4,7 +4,9 @@
 \begin{itemize}
 	\item C. L. Liu and James W. Layland. 1973. Scheduling Algorithms for Multiprogramming in a Hard-Real-Time Environment. \\
      J. ACM 20, 1 (January 1973), 46-61. DOI=http://dx.doi.org/10.1145/321738.321743.
-	\item A. Mok. “Fundamental Design Problems of Distributed Systems for \\
+	\item E. Bini, G. Buttazzo, G. Butazzo, “Rate Monotonic Analysis: the \\
+     Hyperbolic Bound”, IEEE Trans. Computers, Vol. 52, 2003.
+    \item A. Mok. “Fundamental Design Problems of Distributed Systems for \\
           Hard Real-time Environments”. PhD thesis, Massachusetts Institute of \\
           Technology, Cambridge, MA, 1983. 
 \end{itemize}
